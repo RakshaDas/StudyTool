@@ -1,0 +1,23 @@
+{% extends 'tools/base.html' %}
+
+{% block content %}
+
+<div class="card">
+    <div class="card-header h4 white-text primary-color">
+        <strong>{{ note.title }}</strong>
+    </div>
+    <div class="card-body">
+        <div>
+            {% autoescape off %}
+            {{ note.content }}
+            {% endautoescape %}
+        </div>
+        <div class="mt-4">
+            <a href="{% url 'deleteNotes' id=note.id %}" class="btn-floating btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash"></i></a>
+            <a href="{% url 'editNotes' id=note.id %}" class="btn-floating btn-info btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="far fa-edit"></i></a>
+            <a href="{% url 'notes' %}" class="btn btn-rounded btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Back"><strong>Go Back</strong></a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

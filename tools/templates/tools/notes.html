@@ -1,0 +1,48 @@
+{% extends 'tools/base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col">
+        <h3 class="font-weight-bold dark-text">
+            <strong>Notes</strong>
+        </h3>
+    </div>
+    <div class="col">
+        <a href="{% url 'createNotes' %}" class="float-right btn btn-primary btn-sm"><strong><i class="fas fa-plus mr-2"></i>Add new</strong></a>
+    </div>
+</div>
+
+<hr class="mt-2 mb-4">
+
+{% if notes %}
+{% for note in notes%}
+{% if forloop.counter0|divisibleby:3 %}
+<div class="row">
+{%  endif %}
+    <div class="col-md-4">
+         <div class="card mb-4">
+            <div class="card-body pb-3 mt-2">
+                <a class="h5 text-dark" href="#" data-toggle="modal" data-target="#openNotesModal">
+                    {{ note.title }}
+                </a>
+                <div class="mt-2">
+                    <a href="{% url 'deleteNotes' id=note.id %}" class="btn-floating btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash"></i></a>
+                    <a href="{% url 'editNotes' id=note.id %}" class="btn-floating btn-info btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="far fa-edit"></i></a>
+                    <a href="{% url 'openNotes' id=note.id %}" class="btn btn-rounded btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Open"><strong>Open Note</strong></a>
+                </div>
+            </div>
+        </div>
+    </div>
+{%  if forloop.counter|divisibleby:3 or forloop.last %}
+</div>
+{%  endif %}
+{%  endfor %}
+{% else %}
+<div class="container text-center">
+    <h4 class="text-muted mt-5 pt-5 mb-4">No Notes Found!</h4>
+    <a href="{% url 'createNotes' %}" class="btn btn-outline-primary btn-sm"><strong><i class="fas fa-plus mr-2"></i>Add new</strong></a>
+</div>
+{% endif %}
+
+{% endblock %}

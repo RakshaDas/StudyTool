@@ -1,0 +1,104 @@
+{% extends 'tools/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-6 mb-4">
+        <div class="card">
+            <div class="card-header h4 white-text primary-color text-center py-4">
+                <strong>Your Profile</strong>
+            </div> 
+            <div class="card-body text-center">
+                <img src="{{ user.profile.image.url }}" height="180" width="180" alt="User Photo" class="z-depth-1 mb-3 mx-auto mt-4"/>
+                <h4 Class="text-muted font-weight-bold mt-4"><strong>{{ user.username }}</strong></h4>                
+                <h3 Class="text-danger font-weight-bold mb-4"><strong>{{ user.get_full_name }}</strong></h3>                
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 mb-4">
+        <div class="card">
+            <div class="card-header h4 white-text primary-color text-center py-4">
+                <strong>Edit Account</strong>
+            </div> 
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% load widget_tweaks %}
+                    <div class="md-form mb-0">
+                        {% render_field form.firstName|add_error_class:"is-invalid" type="text" id="firstName" class="form-control" %}
+                        <!-- <input type="text" id="firstName" class="form-control"> -->
+                        <label for="firstName">First name</label>
+                        {% for error in form.errors.firstName %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="md-form mb-0">
+                        {% render_field form.lastName|add_error_class:"is-invalid" type="text" id="lastName" class="form-control" %}
+                        <!-- <input type="text" id="lastName" class="form-control"> -->
+                        <label for="lastName">Last name</label>
+                        {% for error in form.errors.lastName %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="md-form mb-0">
+                        {% render_field form.email|add_error_class:"is-invalid" type="email" id="email" class="form-control" %}
+                        <!-- <input type="email" id="email" class="form-control"> -->
+                        <label for="email">Email address</label>
+                        {% for error in form.errors.email %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="md-form mb-0">
+                        <div class="custom-file">
+                            <div class="file-field">
+                                <a class="btn-floating purple-gradient mt-0 float-left">
+                                    <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
+                                    {% render_field form.image type="file"%}
+                                    <!-- <input type="file"> -->
+                                </a>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path" type="text" placeholder="Upload your new profile pic">
+                                </div>
+                                {% for error in form.errors.image %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-center mb-3 mt-2">
+                        <input type="submit" value="Update Account" class="btn btn-primary btn-rounded btn-md">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteAccountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-notify modal-danger" role="document">
+        <div class="modal-content text-center">
+            <div class="modal-header d-flex justify-content-center">
+                <h4 class="modal-title white-text w-100 font-weight-bold">Are you sure?</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="white-text">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <i class="fas fa-times fa-4x animated rotateIn"></i>
+            </div>
+            <div class="modal-footer flex-center">
+                <a href="{% url 'deleteAccount' id=user.id %}" class="btn btn-outline-danger btn-md"><strong>Yes</strong></a>
+                <a type="button" class="btn btn-danger btn-md waves-effect" data-dismiss="modal"><strong>No</strong></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card border-danger text-danger">
+  <div class="card-body">
+    <h5 class="card-title mb-0"><a data-toggle="modal" data-target="#deleteAccountModal"><strong>Delete Account</strong></a></h5>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends 'tools/base.html' %}
+
+{% block content %}
+
+<!-- Add todo modal -->
+<div class="modal fade" id="addTodoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header text-center primary-color">
+              <h4 class="modal-title white-text w-100 font-weight-bold">Add new todo</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true" class="white-text">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <form method="POST">
+                {% csrf_token %}
+                {% load widget_tweaks %}
+                <div class="md-form">
+                    {% render_field form.task|add_error_class:"is-invalid" type="text" id="task" class="form-control" %}
+                    <!-- <input type="text" id="task" class="form-control"> -->
+                    <label for="task">What do you want to do!!</label>
+                    {% for error in form.errors.task %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div class="text-center mt-2 mb-4">
+                    <button type="submit" class="btn btn-outline-primary btn-md waves-effect"><strong>Add Todo</strong></button>
+                    <button class="btn btn-danger btn-md waves-effect" data-dismiss="modal"><strong>Close</strong></button>
+                </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <h3 class="font-weight-bold dark-text">
+      <strong>Todo</strong>
+    </h3>
+  </div>
+  <div class="col">
+    <a href="" class="float-right btn btn-primary btn-sm" data-toggle="modal" data-target="#addTodoModal"><strong><i class="fas fa-plus mr-2"></i>Add new</strong></a>
+  </div>
+</div>
+
+<hr class="mt-2 mb-4">
+
+{% if uncompletedTasks or completedTasks %}
+<div class="row">
+  <div class="col-md-6 mb-4">
+    <div class="card">
+      <div class="card-header h4 white-text primary-color text-center py-4">
+          <strong>Uncompleted Tasks</strong>
+      </div>
+      <div class="card-body">
+        <table class="table table-hover">
+          <tbody>
+            {% for task in uncompletedTasks%}
+            <tr>
+              <td><a href="{% url 'completeTodo' id=task.id %}" data-toggle="tooltip" data-placement="top" title="Complete"><i class="fas fa-check"></i></a></td>
+              <td><a href="{% url 'deleteTodo' id=task.id %}" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fas fa-trash"></i></a></td>
+              <td width="90%" class="text-left"><strong>{{ task.task }}</strong></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 mb-4">
+    <div class="card">
+      <div class="card-header h4 white-text primary-color text-center py-4">
+          <strong>Completed Tasks</strong>
+      </div>
+      <div class="card-body">
+        <table class="table table-hover">
+          <tbody>
+            {% for task in completedTasks%}
+            <tr>
+              <td><a href="{% url 'uncompleteTodo' id=task.id %}" data-toggle="tooltip" data-placement="top" title="Uncomplete"><i class="fas fa-undo"></i></a></td>
+              <td><a href="{% url 'deleteTodo' id=task.id %}" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fas fa-trash"></i></a></td>
+              <td width="90%" class="text-left"><strong><del class="text-danger">{{ task.task }}</del></strong></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="container text-center">
+    <h4 class="text-muted mt-5 pt-5 mb-4">No Todo Found!</h4>
+    <a class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#addTodoModal"><strong><i class="fas fa-plus mr-2"></i>Add new</strong></a>
+</div>
+{% endif %}
+
+{% endblock %}

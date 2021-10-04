@@ -1,0 +1,48 @@
+{% extends 'tools/base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-xl-6 col-lg-6 col-md-10 col-sm-12 mx-auto mt-1">
+        <div class="card">
+            <div class="card-header h4 white-text primary-color text-center py-4">
+                <strong>Change Password</strong>
+            </div>
+            <div class="card-body">
+                <form method='POST'>
+                    {% csrf_token %}
+                    {% load widget_tweaks %}
+                    <div class="md-form mb-0">
+                        {% render_field form.currentPassword|add_error_class:"is-invalid" type="password" id="currentPassword" class="form-control" %}
+                        <!-- <input type="password" id="currentPassword" class="form-control"> -->
+                        <label for="currentPassword">Current Password</label>
+                        {% for error in form.errors.currentPassword %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="md-form mb-0">
+                        {% render_field form.password|add_error_class:"is-invalid" type="password" id="password" class="form-control" %}
+                        <!-- <input type="password" id="password" class="form-control"> -->
+                        <label for="password">New Password</label>
+                        {% for error in form.errors.password %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="md-form mb-0">
+                        {% render_field form.cnf_password|add_error_class:"is-invalid" type="password" id="cnf_password" class="form-control" %}
+                        <!-- <input type="password" id="cnf_password" class="form-control"> -->
+                        <label for="cnf_password">Confirm New Password</label>
+                        {% for error in form.errors.cnf_password %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="col-md-12 text-center my-4">
+                        <input type="submit" value="Change Password" class="btn btn-primary btn-rounded btn-md">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

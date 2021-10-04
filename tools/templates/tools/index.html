@@ -1,0 +1,101 @@
+{% extends 'tools/base.html' %}
+
+{% block content %}
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title font-weight-bold">
+            <strong>
+                Hello 
+                <span class="text-danger">
+                    {% if user.is_authenticated %}
+                    {{ user.first_name }}
+                    {% else %}
+                    World!
+                    {% endif %}
+                </span>
+            </strong>
+        </h4>
+        <blockquote class="blockquote mb-0">
+            <p class="mb-0">
+                <i class="fas fa-quote-left"></i> 
+                {{ quote }}
+                <i class="fas fa-quote-right"></i>
+            </p>
+            <footer class="blockquote-footer text-left pl-0 mb-3">{{ author }}</footer>
+        </blockquote>
+    </div>
+</div>
+
+<div class="mt-4">
+    <h3 class="font-weight-bold dark-text">
+        <strong>All Tools</strong>
+    </h3>
+    <hr class="mt-0">
+</div>
+
+<div class="row row-cols-2 row-cols-md-3">
+    <div class="col mb-4">
+        <a href="{% url 'todo' %}">
+            <div class="card hoverable">
+                <div class="card-body primary-color text-center h5 mb-0 text-white px-0">
+                    <i class="fas fa-tasks mt-2"></i>
+                    <p class="mb-0 mt-3 mb-2">Todo</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col mb-4">
+        <a href="{% url 'notes' %}">
+            <div class="card hoverable">
+                <div class="card-body primary-color text-center h5 mb-0 text-white px-0">
+                    <i class="fas fa-sticky-note mt-2"></i>
+                    <p class="mb-0 mt-3 mb-2">Notes</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col mb-4">
+        <a href="{% url 'googleSearch' %}">
+            <div class="card hoverable">
+                <div class="card-body primary-color text-center h5 mb-0 text-white px-0">
+                    <i class="fas fa-search mt-2"></i>
+                    <p class="mb-0 mt-3 mb-2">Search</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col mb-4">
+        <a href="{% url 'wikipediaSearch' %}">
+            <div class="card hoverable">
+                <div class="card-body primary-color text-center h5 mb-0 text-white px-0">
+                    <i class="fab fa-wikipedia-w mt-2"></i>
+                    <p class="mb-0 mt-3 mb-2">Wikipedia</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col mb-4">
+        <a href="{% url 'translator' %}">
+            <div class="card hoverable">
+                <div class="card-body primary-color text-center h5 mb-0 text-white px-0">
+                    <i class="fas fa-language mt-2"></i>
+                    <p class="mb-0 mt-3 mb-2">Translator</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col mb-4">
+        <a href="{% url 'dictionary' %}">
+            <div class="card hoverable">
+                <div class="card-body primary-color text-center h5 mb-0 text-white px-0">
+                    <i class="fas fa-atlas mt-2"></i>
+                    <p class="mb-0 mt-3 mb-2">Dictionary</p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+{% endblock %}
+

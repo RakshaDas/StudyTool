@@ -1,0 +1,74 @@
+{% extends 'tools/base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-xl-6 col-lg-6 col-md-10 col-sm-12 mx-auto mt-1">
+        <div class="card">
+            <div class="card-header h4 white-text primary-color text-center py-4">
+                <strong><i class="fas fa-user-plus mr-3"></i>Register</strong>
+            </div> 
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    {% load widget_tweaks %}
+                    <div class="row">
+                        <div class="col">
+                            <div class="md-form mb-0">
+                                {% render_field form.firstName|add_error_class:"is-invalid" type="text" id="firstName" class="form-control" %}
+                                <!-- <input type="text" id="firstName" class="form-control"> -->
+                                <label for="firstName">First name</label>
+                                {% for error in form.errors.firstName %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="md-form mb-0">
+                                {% render_field form.lastName|add_error_class:"is-invalid" type="text" id="lastName" class="form-control" %}
+                                <!-- <input type="text" id="lastName" class="form-control"> -->
+                                <label for="lastName">Last name</label>
+                                {% for error in form.errors.lastName %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md-form">
+                        {% render_field form.email|add_error_class:"is-invalid" type="email" id="email" class="form-control" %}
+                        <!-- <input type="email" id="email" class="form-control"> -->
+                        <label for="email">Email address</label>
+                        {% for error in form.errors.email %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="md-form">
+                        {% render_field form.password|add_error_class:"is-invalid" type="password" id="password" class="form-control" %}
+                        <!-- <input type="password" id="password" class="form-control"> -->
+                        <label for="password">Password</label>
+                        {% for error in form.errors.password %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="md-form">
+                        {% render_field form.cnf_password|add_error_class:"is-invalid" type="password" id="cnf_password" class="form-control" %}
+                        <!-- <input type="password" id="cnf_password" class="form-control"> -->
+                        <label for="cnf_password">Confirm Password</label>
+                        {% for error in form.errors.cnf_password %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="text-center mt-2">
+                        <button class="btn btn-outline-primary" type="submit"><strong>Sign up <i class="fas fa-sign-in-alt ml-1"></i></strong></button>
+                    </div>
+                </form>
+                <hr>
+                <div class="text-muted text-center mt-1">
+                    <p class="pt-1">Already have an account? <a href="{% url 'login' %}" class="blue-text">Log In</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+      
+{% endblock %}

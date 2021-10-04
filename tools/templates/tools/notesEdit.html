@@ -1,0 +1,33 @@
+{% extends 'tools/base.html' %}
+
+{% block content %}
+
+<div class="card">
+    <div class="card-header h4 white-text primary-color">
+        <strong>Edit Note</strong>
+    </div>
+    <div class="card-body">
+        <form method="POST">
+            {% csrf_token %}
+            {% load widget_tweaks %}
+            <div class="md-form">
+                {% render_field form.title|add_error_class:"is-invalid" type="text" id="title" class="form-control" %}
+                <!-- <input type="text" id="title" class="form-control"> -->
+                <label for="title">Note Title</label>
+                {% for error in form.errors.title %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+            </div>
+            <div class="md-form">
+                {% render_field form.content class="form-control" %}
+                <!-- <label for="content">Content</label> -->
+            </div>
+            <div class="mt-2 mb-4">
+                <button type="submit" class="btn btn-outline-primary btn-md waves-effect"><strong>Update</strong></button>
+                <a href="{% url 'notes' %}" class="btn btn-danger btn-md"><strong>Cancel</strong></a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

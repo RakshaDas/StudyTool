@@ -1,0 +1,63 @@
+{% extends 'tools/base.html' %}
+
+{% block content %}
+
+<div class="card">
+    <div class="card-header h4 white-text primary-color">
+        <strong>Translator</strong>
+    </div>
+    <div class="card-body">
+       <form method="post">
+            {% csrf_token %}
+            {% load widget_tweaks %}
+            <div class="row">
+                <div class="col-lg-5">
+                    {% render_field form.fromOption class="mdb-select md-form colorful-select dropdown-primary" searchable="Search here.." %}
+                    <!-- <select class="mdb-select md-form colorful-select dropdown-primary" searchable="Search here..">
+                        <option value="1">eng</option>
+                        <option value="2">Option 2</option>
+                        <option value="3">Option 3</option>
+                        <option value="4">Option 4</option>
+                        <option value="5">Option 5</option>
+                    </select> -->
+                    <label class="mdb-main-label">From</label>
+                </div>
+                <div class="col d-flex justify-content-center align-items-center">
+                    <i class="fas fa-exchange-alt pb-0"></i>
+                </div>
+                <div class="col-lg-5">
+                    {% render_field form.toOption class="mdb-select md-form colorful-select dropdown-primary" searchable="Search here.." %}
+                    <!-- <select class="mdb-select md-form colorful-select dropdown-primary" searchable="Search here..">
+                        <option value="1">hindi</option>
+                        <option value="2">Option 2</option>
+                        <option value="3">Option 3</option>
+                        <option value="4">Option 4</option>
+                        <option value="5">Option 5</option>
+                    </select> -->
+                    <label class="mdb-main-label">To</label>
+                </div>
+            </div>
+            <div class="md-form">
+                {% render_field form.query class="md-textarea form-control pt-0" rows="3" %}
+                <!-- <textarea class="md-textarea form-control pt-0" rows="3"></textarea> -->
+            </div>
+            <div class="text-center mt-2">
+                <button class="btn btn-primary btn-md" type="submit"><strong>Translate</strong></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if result %}
+<div class="card mt-4">
+    <div class="card-body">
+        <h4 class="text-dark font-weight-bold mb-4"><strong>{{ fromOption }}<i class="fas fa-exchange-alt mx-4"></i>{{ toOption }}</strong></h4>
+        <p class="text-justify mb-0">
+            {{ result }}
+        </p>
+    </div>
+</div>
+
+{% endif %}
+{% endblock %}
+       
